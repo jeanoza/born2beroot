@@ -1,0 +1,42 @@
+Consignes générales:
+#1. installer un logiciel pour démarer VM(UTM ou VirtualBox)
+
+#2. rendre `signature.txt` - contenant la signature du disque virtuel de la machine. => RENDU FINAL!
+
+
+Partie obligatoire:
+#1. choix os(system d'exploitation): Debian lastest stable version
+#2. minimum 2 partitions chiffrées :
+
+cf/ LVM(Logiciel Volume Management) : Gestion par volumes logiques
+
+ex/
+sda
+|-sda1
+|-sda2
+|-sda5
+  |-sda5_crypt
+	|-will--vg-root
+	|-will--vg-swap_1
+	|-will--vg-home
+
+#3. Connaissances sur ...
+	#3.1. os choisi : Debian est...
+
+	#3.2. aptitude et apt
+		#3.2.1. Aptitude : un des logiciels de APT
+		#3.2.2. APT(Advanced Packaging Tool) : ensemble d'utilitaire utilisable en ligne de commande
+			comme :
+			|- apt-get
+			|- aptitude
+
+	#3.3. SELinux(Security-Enhanced Linux) : architecture de sécurité pour Linux
+		#3.3.1. fonctionnement
+			#3.3.1.1. politiques de sécurité
+				: règle indiquant tel ou tel utilisateur capable ou incapable d'acceder a tel ou tel fichier.
+			#3.3.1.2. AVC(Access Vector Cache)
+				- temporairement stockée les autorisations d'accès
+				- lorsque App envoie une requête pour acceder un ficier SELinux consulte ce AVC
+				(si SELinux ne peux pas faire cela, il envoie une requete au serveur de sécurité)
+				=> En cas de refus, "avc: denied" dans /var/log.messages
+

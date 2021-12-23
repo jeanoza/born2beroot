@@ -48,7 +48,7 @@ sda
 				: on ne peut pas se connecter avec ROOT par(via?) SSH
 			#3.3.2.2. pare-feu(debian) UFW(CentOS)
 				- pare-feu??
-			#3.3.2.3. hostname = kchoi42
+			#3.3.2.3. hostname = kychoi42
 				- possible modifier hostname durant évaluation
 			#3.3.2.3. politique de mot de passe fort
 				- expirer tous les 30 jours
@@ -56,13 +56,28 @@ sda
 				- avertissement "7 jours" avant l'expiration de mot de passe
 				- 10 caracteres minimums contenant au moins 1 majscule 1 chiffre, PAS DE 3 caracteres consécutifs.
 				- ne pas contenir le nom de l'utilisateur
-				- ne pas contenir 7 caracteres pr
-			#3.3.2.4. sudo
-				- pratique stricte
+				- AU MOINS 7 caractères qui ne sont pas pareil que celui de l'ancien mot de passe.
+					=> root n'est pas concernée à cette derniere condition.
+			#3.3.2.4. sudo - pratique stricte
+				- 3 essais au max en cas de mot de passe erroné.
+				- message(de mon choix) en cas d'erreur suite à mauvais mot de passe
+					: ex/ "votre mot de passe a changé il y a 1 jour, il faut attendre 1 jour plus!"
+				- il faut logger pour toutes les utilisations de sudo dans "/var/log/sudo/" : input - output
+				- Mode TTY doit etre activé pour des questions de sécurité? -> GOOGLING!!
+					: TTY?
+				- path utilisatble par sudo est limités pour des questions de sécurité
+					/usr/local/sbin
+					/usr/local/bin
+					/user/sbin
+					/usr/bin
+					/bin
+					/snap/bin
 			#3.3.2.5. deux utilisateurs (a la base) et groups
 				- kychoi -> user42
 				- root -> sudo(?)
 				=> durant la soutenance, il faudra créer un nouvel utilisateur et lui assigner un group.
+		#3.3.3 Apres avoir mis en place les fichiers de configuration
+			- IL FAUT CHANGER tous les mots de passe des comptes présent sur la machine(root inclus)
 			
 
 

@@ -46,8 +46,7 @@ sda
 			#3.3.2.1. port 4242
 				- SSH actif sur port 4242 uniquement
 				: on ne peut pas se connecter avec ROOT par(via?) SSH
-			#3.3.2.2. pare-feu(debian) UFW(CentOS)
-				- pare-feu??
+			#3.3.2.2. pare-feu(debian)
 			#3.3.2.3. hostname = kychoi42
 				- possible modifier hostname durant évaluation
 			#3.3.2.3. politique de mot de passe fort
@@ -78,7 +77,4 @@ sda
 				=> durant la soutenance, il faudra créer un nouvel utilisateur et lui assigner un group.
 		#3.3.3 Apres avoir mis en place les fichiers de configuration
 			- IL FAUT CHANGER tous les mots de passe des comptes présent sur la machine(root inclus)
-			
-
-
-
+	#3.4. monitoring.sh.... : tous les 10 mins...

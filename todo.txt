@@ -27,8 +27,9 @@ sda
 		#3.2.1. Aptitude : un des logiciels de APT
 		#3.2.2. APT(Advanced Packaging Tool) : ensemble d'utilitaire utilisable en ligne de commande
 			comme :
-			|- apt-get
-			|- aptitude
+			|- apt-get: plus agé, il y a plus d'option utilisable que apt
+			|- aptitude : beaucoup plus large...
+			|- apt
 
 	#3.3. SELinux(Security-Enhanced Linux) : architecture de sécurité pour Linux
 		#3.3.1. fonctionnement

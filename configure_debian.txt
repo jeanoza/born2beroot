@@ -155,10 +155,30 @@
 					#Sudo: $cmds cmd"
 		=== === === === === === === === === === === === === === === === === === === === === ===
 
-		uname
+		- $uname -a 		#show system name ( -a: all name)
+		- /proc/cpuinfo  	#file which contains cpu informations
+		- $free -m 			#show memory state ( -m: show with MB)
+		- $df 				#describe filesystem (-BM: MB, -BG: GB)
+		- $mpstat			#show cpu state
+							- %sys: percent kernel(system) used
+							- %idle : percent not I/O request in CPU
+		- $hostname -I		#show hostname (-I:with IP)
+		- /proc/net/sockstat	#show TCP info ("inuse" that i want)
+		- ip link [show]	#show MAC(Media Acces Control)
+		- $journalctl 		#show all commands executed via command line (-q: turn off notice)
+		- $wall []
+
 
 	#4.2. configure "crontab"
 		- $ sudo crontab -u root -e
+
+		=== === === === === script === === === === ===
+
+		[...]
+		*/10 * * * * sh /home/kychoi/monitoring.sh
+		=== === === === === === === === === === === ===
+
+		# every 10 min, $ sh /home/kychoi/monitoring.sh
 
 # Resume
 	## packages to install
@@ -185,14 +205,4 @@
 			- sudo_log_file:		/var/log/sudo/sudo.log
 		- password:	/etc/pam.d/common-password
 		- ssh:		/etc/ssh/sshd_config
-
-	## monitoring.sh
-		- $ wall
-			: print Broadcast message ...
-		- $ free -[m | g]
-			: print memory
-		- $ df -
-			: describe file system
-		- $ top -[b] 
-		- $ 
 

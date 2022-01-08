@@ -1,0 +1,157 @@
+# 1.sudo
+
+	#1.1. install sudo
+		#1.1.1. change to super user
+			$su
+		#1.1.2. install sudo
+			#apt install sudo
+			cf/ # => conneted as superuser
+		#1.1.3. verify if sudo was installed
+			# dpkg -l | grep sudo
+			cf/ dpkg : debian package
+
+	#1.2. add normal user to sudo group
+		#1.2.1. adduser
+			# sudo adduser <username> sudo | #usermod -aG sudo <username>
+		#1.2.2. verify
+			# getent group sudo
+
+
+	#1.3. configure sudo
+		#1.3.1. create sudo_config file
+			$sudo vi /etc/sudoers.d/<filename>
+
+		#1.3.2. write sudo_config file
+
+			=== === === /etc/sudoers.d/sudo_config === === ===
+			Defaults	passwd_tries=3 									# 3 tries max when incorrect password
+			Defaults	badpass_message="Attention: Wrong password!!" 	# error message when incorrect password
+			Defaults	logfile="/var/log/sudo/sudo.log" 				# log all sudo commands to /var/log/sudo/sudo.log  => $ sudo vi /var/log/sudo/sudo.log
+			Defaults	log_input,log_output 							# input & output log
+			Defaults	iolog_dir="/var/log/sudo"
+			Defaults	requiretty 										# require tty ## cf/ tty? Tele TYpe writer....
+			Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin" # set sudo path
+			=== === ===  === === === === === ===  === === ===
+
+
+#2. SSH
+	#2.1. openssh-server
+		#2.1.1 install openssh-server
+			$ sudo apt-get update
+			$ sudo apt install openssh-server
+		#2.1.2 verify if oepnssh-server is installed
+			$ dpkg -l | grep ssh
+		#2.1.3 configure SSH policy
+			$ sudo vi /etc/ssh/sshd_config
+
+				=== === === === === /etc/ssh/sshd_config === === === === ===
+				[...]
+				#Port 22 -> Port 4242
+				[...]
+				#PermitRootLogin... -> PermitRootLogin no
+				[...]
+				=== === === === === === === === ===  === === === === === ===
+
+		#2.1.4. SSH status
+			$ service ssh status
+			or
+			$ systemctl status ssh	=> check ssh
+
+	#2.2. UFW
+		#2.2.1. install
+			$ sudo apt install ufw
+			$ dpkg -l | grep ufw
+			$ sudo ufw status
+		#2.2.2. active ufw && connect to 4242 port
+			$ sudo ufw enable
+			$ sudo ufw allow 4242
+			$ sudo ufw status
+
+#3. User
+	#3.1. Password Policy
+		#3.1.1. edit password configuration file
+			$sudo vi /etc/login.defs
+				==== ==== ==== ==== ===== /etc/login.defs ==== ==== ==== ==== ==== ==== ====
+				PASS_MAX_DAYS	99999		=> 30
+				PASS_MIN_DAYS	0			=> 2
+				PASS_WARN_AGE	7			=> 7(by default 7...)
+				==== ==== ==== ==== ===== ==== ==== ===== ==== ==== ==== ==== ==== ==== ====
+
+		#3.1.2. make password strong via 'libpam-pwquality' && verify
+			$ sudo apt install libpam-pwquality && dpkg -l | grep libpam-pwquality
+			$ sudo vi /etc/pam.d/common-password
+
+				==== ==== ==== ==== ===== /etc/pam.d/common-password ==== ==== ==== ==== ====
+				password	requisite	pam_pwquality.so retry=3 minlen=10 ucredit=-1 dcredit=-1  maxrepeat=3 reject_username difok=7 enforce_for_root
+				==== ==== ==== ==== ===== ==== ==== ===== ==== ==== ==== ==== ==== ==== =====
+
+				* minlen=10:				minimum 10 characters
+				* ucredit=-1 dcredit=-1:	contains at list 1 uppercase && 1 lowercase(downcase)
+				* maxrepeat=3:				maximum 3 characters consecutive
+				* reject_username:			reject if pw contains current user name
+				* difok=7:					new pw must contains at least 7 characters which are not in old pw
+				* enforce_for_root			same policy on root
+
+	#3.2. Create new user
+		#3.2.1. create
+			$ sudo adduser <new_user_name>
+		#3.2.2. verify if user has benn created
+			$ getent passwd <new_user_name>
+			or
+			$ su <new_user_name>
+		#3.2.3. verify & compare new user policy with old user policy
+			$ sudo chage -l <new_user_name>
+			$ sudo chage -l <old_user_name>
+
+	#3.3.3. Create new Group
+		#3.3.1. create
+			$ sudo addgroup user42
+		$3.3.2. add user to user42
+			$ sudo adduser <username> user42
+			or
+			$ sudo usermod -aG user42 <username>
+		#3.3.3. verify
+			$ getent group user42
+		cf/ remove user from group
+			$ sudo delgroup <username> <groupname>
+
+
+#4. CRON: repeat to show log every 10 min
+	
+
+# Resume
+	## packages to install
+		- sudo
+		- ufw
+		- openssh-server
+		- libpam-pwquality
+		- sysstat => for mpstat(CPU %)
+	## util commands
+		### users
+			- $ sudo adduser <user_name>
+				cf: $ sudo deluser <user_name>
+			- $ getent passwd <user_name>
+			- $ sudo chage -l <user_name> 		## to show password policy
+
+		### group
+			- $ sudo addgroup <username> <group>
+				cf: $ sudo delgroup <group_name>
+			- $ getent group <group_name>
+	
+	## config files
+		- sudo:		/etc/sudoers.d/sudo_config
+			- sudo_log_directory:	/var/log/sudo
+			- sudo_log_file:		/var/log/sudo/sudo.log
+		- password:	/etc/pam.d/common-password
+		- ssh:		/etc/ssh/sshd_config
+
+	## monitoring.sh
+		- $ wall
+			: print Broadcast message ...
+		- $ free -[m | g]
+			: print memory
+		- $ df -
+			: describe file system
+		- $ top -[b] 
+		- $ 
+

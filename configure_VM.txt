@@ -1,0 +1,49 @@
+
+=== === === === === === === === === === === === === === Configuration === === === === === === === === === === ===
+
+#1. VM Settings
+Linux, Debian 64-bit -> 1gb -> create vdf -> VDI -> Dynamically allocated -> 8gb
+
+Settings -> storage -> IDE -> cd -> debian-xx-x-x-amd64-netinst.iso
+
+
+#2. Installation
+
+Install (Not Graphical install)
+Choose language (English)
+
+Territory or area: Choose yours. For Me it's Other -> Europe ->
+-> Russian Federation -> Canada (lmao) -> American English keyboard layout. Wait
+
+Hostname: yourintralogin42 -> Domain name: leave empty ->
+-> Root password: qwerty123(please no!); Re-enter. Full name: Your full name.
+Real/intra/else, doesn't matter. Username: yourintralogin ->
+Password: zxc1337 (bruh) -> Time zone: Your time zone or Moscow for Moscow
+campus (yes). Wait.
+
+
+#2.1. Partition setup
+For basic part:
+Partition method: Guided - use entire disk and set up encrypted LVM ->
+-> SCSIX (0,0,0) (sda) - 8.6 GB ATA VBOX HARDDISK -> separate /home partition ->
+-> yes. Wait.
+Enter encryption passphrase twice -> 8.1G or just max ->
+-> Finish partitioning and write changes to disk -> yes. Wait.
+
+
+#2.2.2. CD/DVD & SSH setup 
+Scan another CD or DVD? -> no
+Debian archive mirror country -> your nearest mirror or Russian Federation for
+Moscow campus -> deb.debian.org (doesn't matter) ->
+-> leave proxy info field empty and proceed.
+
+Participate in the package usage survey? -> NO!
+
+Soft seclection: remove SSH server & standart system utilities with space(again)
+GRUB - YES! -> /dev/sda
+Installlation complee -> continue
+
+Virtual war machine is ready.
+
+
+=== === === === === === === === === === === === === === in VM === === === === === === === === === === === === ===

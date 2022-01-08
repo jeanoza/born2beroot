@@ -67,6 +67,9 @@
 			$ sudo ufw allow 4242
 			$ sudo ufw status
 
+	#2.3. Connection via physical machine
+		$ ssh kychoi@localhost -p 4242
+
 #3. User
 	#3.1. Password Policy
 		#3.1.1. edit password configuration file
@@ -175,10 +178,9 @@
 		=== === === === === script === === === === ===
 
 		[...]
-		*/10 * * * * sh /home/kychoi/monitoring.sh
+		*/10 * * * * sh /home/kychoi/monitoring.sh 		# every 10 min, $ sh /home/kychoi/monitoring.sh
 		=== === === === === === === === === === === ===
 
-		# every 10 min, $ sh /home/kychoi/monitoring.sh
 
 #5. signature.txt
 	# 5.1. location
@@ -204,6 +206,13 @@
 			- $ sudo addgroup <username> <group>
 				cf: $ sudo delgroup <group_name>
 			- $ getent group <group_name>
+
+		### time
+			- $ timedatectl status
+			- $ sudo timedatectl set-ntp true	##synchronize time
+
+		### reboot
+			- $ sudo reboot
 	
 	## config files
 		- sudo:		/etc/sudoers.d/sudo_config

@@ -1,5 +1,5 @@
 
-=== === === === === === === === === === === === === === Configuration === === === === === === === === === === === === ===
+=== === === === === === === === === === === === === === Configuration === === === === === === === === === === ===
 
 #1. VM Settings
 Linux, Debian 64-bit -> 1gb -> create vdf -> VDI -> Dynamically allocated -> 8gb
@@ -63,7 +63,7 @@ Virtual war machine is ready.
 
 	#1.2. add normal user to sudo group
 		#1.2.1. adduser
-			# adduser <username> sudo | #usermod -aG sudo <username>
+			# sudo adduser <username> sudo | #usermod -aG sudo <username>
 		#1.2.2. verify
 			# getent group sudo
 
@@ -168,4 +168,40 @@ Virtual war machine is ready.
 
 
 #4. CRON: repeat to show log 
+
+# Resume
+	## packages to install
+		- sudo
+		- ufw
+		- openssh-server
+		- libpam-pwquality
+		- sysstat => for mpstat(CPU %)
+	## util commands
+		### users
+			- $ sudo adduser <user_name>
+				cf: $ sudo deluser <user_name>
+			- $ getent passwd <user_name>
+			- $ sudo chage -l <user_name>
+
+		### group
+			- $ sudo addgroup <username> <group>
+				cf: $ sudo delgroup <group_name>
+			- $ getent group <group_name>
+	
+	## config files
+		- sudo:		/etc/sudoers.d/<filename>
+			- sudo_log_directory:	/var/log/sudo
+			- sudo_log_file:		/var/log/sudo/sudo.log
+		- password:	/etc/pam.d/common-password
+		- ssh:		/etc/ssh/sshd_config
+
+	## monitoring.sh
+		- $ wall
+			: print Broadcast message ...
+		- $ free -[m | g]
+			: print memory
+		- $ df -
+			: describe file system
+		- $ top -[b] 
+		- $ 
 

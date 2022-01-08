@@ -117,7 +117,48 @@
 
 
 #4. CRON: repeat to show log every 10 min
-	
+
+	#4.1. write script monitoring.sh
+
+		=== === === === === === /home/kychoi/monitoring.sh === === === === === === === ===
+			#!/bin/sh
+			arc=$(uname -a)
+			pcpu=$(grep "physical id" /proc/cpuinfo | wc -l)
+			vcpu=$(grep "processor" /proc/cpuinfo | wc -l)
+			total_ram=$(free -m | awk '$1=="Mem:" {print $2}')
+			used_ram=$(free -m | awk '$1=="Mem:" {print $3}')
+			percent_ram=$(free | awk '$1=="Mem:" {printf("%.2f%%"), $3/$2*100}')
+			total_disk=$(df -BG | grep '^/dev/' | grep -v '/boot$' | awk '{total += $2} END {print total}')
+			used_disk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{used += $3} END {print used}')
+			percent_disk=$(df -BM | grep '^/dev/' | grep -v '/boot$' | awk '{total += $2} {used += $3} END {printf("%.2f%%"), used/total*100}')
+			cpu_load=$(mpstat | grep all | awk '{printf("%.2f%%"), 100 - $12}')
+			last_boot=$(who -b | awk '$2=="boot" {print $3" "$4}')
+			count_lvm=$(lsblk | grep "lvm" | wc -l)
+			lvm_use=$(if [ $count_lvm -gt 0 ]; then echo "yes"; else echo "no"; fi)
+			tcp=$(cat /proc/net/sockstat | awk '$1 == "TCP:" {print $3}')
+			user_log=$(users | wc -w)
+			ip=$(hostname -I | awk '{print $1}')
+			ether=$(ip link show | grep link/ether | awk '{print $2}')
+			cmds=$(journalctl -q | grep sudo | grep 'COMMAND=' | wc -l)
+
+			wall "  #Architecture: $arc
+					#CPU physical: $pcpu
+					#vCPU: $vcpu
+					#Memory Usage: $used_ram/${total_ram}MB ($percent_ram)
+					#Disk Usage: $used_disk/${total_disk}Gb ($percent_disk)
+					#CPU load: $cpu_load
+					#Last boot: $last_boot
+					#LVM use: $lvm_use
+					#Connexions TCP: $tcp ESTABLISHED
+					#User log: $user_log
+					#Network: IP $ip ($ether)
+					#Sudo: $cmds cmd"
+		=== === === === === === === === === === === === === === === === === === === === === ===
+
+		uname
+
+	#4.2. configure "crontab"
+		- $ sudo crontab -u root -e
 
 # Resume
 	## packages to install

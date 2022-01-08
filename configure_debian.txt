@@ -180,6 +180,12 @@
 
 		# every 10 min, $ sh /home/kychoi/monitoring.sh
 
+#5. signature.txt
+	# 5.1. location
+		$ cd /Users/kyubongchoi/Library/Containers/com.utmapp.UTM/Data/Documents/born2beroo.utm/Images
+	# 5.2. command for extract signature.txt
+		$ shasum disk-0.qcow2 | awk '{print $1}' > ~/Workspace/42/born2beroot/signature.txt
+
 # Resume
 	## packages to install
 		- sudo
